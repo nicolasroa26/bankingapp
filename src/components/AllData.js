@@ -1,22 +1,21 @@
 import React, { useContext } from "react";
-import { Card } from "react-bootstrap";
-import { UserContext } from "../context/UserContext";
+import BankContext from "../context/BankContext";
+import { Card, ListGroup } from "react-bootstrap";
 
 function AllData() {
-  const { users } = useContext(UserContext);
+  const { transactions } = useContext(BankContext);
 
   return (
-    <Card style={{ width: "18rem" }}>
+    <Card>
       <Card.Body>
-        <Card.Title>Todos los Datos</Card.Title>
-        {users.map((user, index) => (
-          <div key={index}>
-            <p>Nombre: {user.name}</p>
-            <p>Email: {user.email}</p>
-            <p>Balance: ${user.balance.toFixed(2)}</p>
-            <hr />
-          </div>
-        ))}
+        <Card.Title>All Data</Card.Title>
+        <ListGroup>
+          {transactions.map((transaction, index) => (
+            <ListGroup.Item key={index}>
+              {transaction.type}: ${transaction.amount}
+            </ListGroup.Item>
+          ))}
+        </ListGroup>
       </Card.Body>
     </Card>
   );

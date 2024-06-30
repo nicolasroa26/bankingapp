@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { Card, Form, Button, Alert } from "react-bootstrap";
+import React, { useState, useContext } from "react";
+import { Card, Form, Button, Alert, Container } from "react-bootstrap";
+import BankContext from "../context/BankContext";
 
 function Deposit() {
+  const { balance, deposit } = useContext(BankContext);
   const [amount, setAmount] = useState("");
-  const [balance, setBalance] = useState(0);
   const [message, setMessage] = useState("");
 
   const handleDeposit = () => {
@@ -16,32 +17,41 @@ function Deposit() {
       alert("El valor introducido no puede ser negativo.");
       return;
     }
-    setBalance(balance + numberAmount);
+    deposit(numberAmount);
     setMessage("Depósito realizado con éxito.");
     setAmount("");
   };
 
   return (
-    <Card style={{ width: "18rem" }}>
-      <Card.Body>
-        <Card.Title>Balance: ${balance.toFixed(2)}</Card.Title>
-        {message && <Alert variant="success">{message}</Alert>}
-        <Form>
-          <Form.Group controlId="formAmount">
-            <Form.Label>Monto de Depósito</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Introduce el monto"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-            />
-          </Form.Group>
-          <Button variant="primary" onClick={handleDeposit} disabled={!amount}>
-            Depositar
-          </Button>
-        </Form>
-      </Card.Body>
-    </Card>
+    <Container
+      className="d-flex justify-content-center align-items-center"
+      style={{ height: "100vh" }}
+    >
+      <Card style={{ width: "30rem" }}>
+        <Card.Body>
+          <Card.Title>Balance: ${balance.toFixed(2)}</Card.Title>
+          {message && <Alert variant="success">{message}</Alert>}
+          <Form>
+            <Form.Group controlId="formAmount">
+              <Form.Label>Monto de Depósito</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Introduce el monto"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+              />
+            </Form.Group>
+            <Button
+              variant="primary"
+              onClick={handleDeposit}
+              disabled={!amount}
+            >
+              Depositar
+            </Button>
+          </Form>
+        </Card.Body>
+      </Card>
+    </Container>
   );
 }
 

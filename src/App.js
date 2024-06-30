@@ -8,14 +8,14 @@ import Deposit from "./components/Deposit";
 import Withdraw from "./components/Withdraw";
 import Balance from "./components/Balance";
 import AllData from "./components/AllData";
-import { UserProvider } from "./context/UserContext";
+import { BankProvider } from "./context/BankContext";
 
 const AppLayout = () => {
   return (
-    <UserProvider>
+    <BankProvider>
       <NavBar />
       <Outlet />
-    </UserProvider>
+    </BankProvider>
   );
 };
 
