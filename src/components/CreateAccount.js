@@ -12,21 +12,25 @@ function CreateAccount() {
 
   const handleCreateAccount = () => {
     if (!name) {
-      setMessage("El campo de nombre no puede estar vacío.");
+      setMessage("The name field cannot be empty.");
       return;
     }
     if (!email) {
-      setMessage("El campo de correo electrónico no puede estar vacío.");
+      setMessage("The email field cannot be empty.");
       return;
     }
     if (!password || password.length < 8) {
-      setMessage("La contraseña debe tener al menos 8 caracteres.");
+      setMessage("The password must be at least 8 characters long.");
       return;
     }
 
     addAccount({ name, email, password, balance: 100 });
-    setMessage("Cuenta creada exitosamente.");
+    setMessage("Account successfully created.");
     setShowForm(false);
+  };
+
+  const isFormValid = () => {
+    return name && email && password.length >= 8;
   };
 
   return (
@@ -34,11 +38,13 @@ function CreateAccount() {
       className="d-flex justify-content-center align-items-center"
       style={{ height: "100vh" }}
     >
-      <Card style={{ width: "30rem" }}>
+      <Card
+        style={{ width: "30rem", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}
+      >
         <Card.Body>
           {message && (
             <Alert
-              variant={message.includes("exitosamente") ? "success" : "danger"}
+              variant={message.includes("successfully") ? "success" : "danger"}
             >
               {message}
             </Alert>
@@ -73,29 +79,35 @@ function CreateAccount() {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </Form.Group>
-                <Button
-                  variant="primary"
-                  onClick={handleCreateAccount}
-                  disabled={!name || !email || !password}
-                >
-                  Create Account
-                </Button>
+                <div className="d-flex justify-content-center">
+                  <Button
+                    variant="primary"
+                    onClick={handleCreateAccount}
+                    disabled={!isFormValid()}
+                    style={{ marginTop: "10px" }}
+                  >
+                    Create Account
+                  </Button>
+                </div>
               </Form>
             </>
           ) : (
             <>
-              <Button
-                variant="primary"
-                onClick={() => {
-                  setShowForm(true);
-                  setName("");
-                  setEmail("");
-                  setPassword("");
-                  setMessage("");
-                }}
-              >
-                Add another account
-              </Button>
+              <div className="d-flex justify-content-center">
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    setShowForm(true);
+                    setName("");
+                    setEmail("");
+                    setPassword("");
+                    setMessage("");
+                  }}
+                  style={{ marginTop: "10px" }}
+                >
+                  Add another account
+                </Button>
+              </div>
             </>
           )}
         </Card.Body>

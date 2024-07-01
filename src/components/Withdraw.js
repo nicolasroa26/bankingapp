@@ -10,19 +10,19 @@ function Withdraw() {
   const handleWithdraw = () => {
     const numberAmount = parseFloat(amount);
     if (isNaN(numberAmount)) {
-      alert("El valor introducido no es un número.");
+      alert("The entered value is not a number.");
       return;
     }
     if (numberAmount < 0) {
-      alert("El valor introducido no puede ser negativo.");
+      alert("The entered value cannot be negative.");
       return;
     }
     if (numberAmount > balance) {
-      alert("Fondos insuficientes.");
+      alert("Insufficient funds.");
       return;
     }
     withdraw(numberAmount);
-    setMessage("Retiro realizado con éxito.");
+    setMessage("Withdrawal successful.");
     setAmount("");
   };
 
@@ -31,27 +31,32 @@ function Withdraw() {
       className="d-flex justify-content-center align-items-center"
       style={{ height: "100vh" }}
     >
-      <Card style={{ width: "30rem" }}>
+      <Card
+        style={{ width: "30rem", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}
+      >
         <Card.Body>
           <Card.Title>Balance: ${balance.toFixed(2)}</Card.Title>
           {message && <Alert variant="success">{message}</Alert>}
           <Form>
             <Form.Group controlId="formAmount">
-              <Form.Label>Monto de Retiro</Form.Label>
+              <Form.Label>Withdrawal Amount</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Introduce el monto"
+                placeholder="Enter amount"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
               />
             </Form.Group>
-            <Button
-              variant="primary"
-              onClick={handleWithdraw}
-              disabled={!amount}
-            >
-              Retirar
-            </Button>
+            <div className="d-flex justify-content-center">
+              <Button
+                variant="primary"
+                onClick={handleWithdraw}
+                disabled={!amount}
+                style={{ marginTop: "10px" }}
+              >
+                Withdraw
+              </Button>
+            </div>
           </Form>
         </Card.Body>
       </Card>

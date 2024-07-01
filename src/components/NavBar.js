@@ -1,75 +1,125 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { Navbar, Nav, OverlayTrigger, Tooltip } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const NavBar = () => {
   const location = useLocation();
 
-  return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <a className="navbar-brand">BadBank</a>
+  const activeStyle = {
+    fontWeight: "bold",
+    color: "#007bff",
+  };
 
-      <button
-        className="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarNav"
-      >
-        <span className="navbar-toggler-icon"></span>
-      </button>
-      <div className="collapse navbar-collapse" id="navbarNav">
-        <ul className="navbar-nav mr-auto">
-          <li
-            className={`nav-item ${
-              location.pathname === "/home/" ? "active" : ""
-            }`}
-          >
-            <NavLink className="nav-link" to="/home/">
-              Home
-            </NavLink>
-          </li>
-          <li
-            className={`nav-item ${
-              location.pathname === "/deposit/" ? "active" : ""
-            }`}
-          >
-            <NavLink className="nav-link" to="/deposit/">
-              Deposit
-            </NavLink>
-          </li>
-          <li
-            className={`nav-item ${
-              location.pathname === "/withdraw/" ? "active" : ""
-            }`}
-          >
-            <NavLink className="nav-link" to="/withdraw/">
-              Withdraw
-            </NavLink>
-          </li>
-          <li
-            className={`nav-item ${
-              location.pathname === "/all-data/" ? "active" : ""
-            }`}
-          >
-            <NavLink className="nav-link" to="/all-data/">
-              AllData
-            </NavLink>
-          </li>
-        </ul>
-        <ul className="navbar-nav ml-auto">
-          <li
-            className={`nav-item ${
-              location.pathname === "/create-account/" ? "active" : ""
-            }`}
-          >
-            <NavLink className="nav-link" to="/create-account/">
-              Create Account
-            </NavLink>
-          </li>
-        </ul>
-      </div>
-    </nav>
+  const linkStyle = {
+    marginRight: "20px",
+  };
+
+  const renderTooltip = (text) => <Tooltip>{text}</Tooltip>;
+
+  return (
+    <>
+      <style type="text/css">
+        {`
+          .navbar-nav .nav-link {
+            margin-right: 20px; /* Aumenta el espacio entre los enlaces */
+          }
+          .navbar-nav .nav-link:hover {
+            color: #0056b3;
+          }
+        `}
+      </style>
+      <Navbar style={{ backgroundColor: "#e3f2fd" }} expand="lg">
+        <Navbar.Brand>BadBank</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            <OverlayTrigger
+              placement="bottom"
+              overlay={renderTooltip("Go to Home page")}
+            >
+              <Nav.Link
+                as={NavLink}
+                to="/home/"
+                style={
+                  location.pathname === "/home/"
+                    ? { ...linkStyle, ...activeStyle }
+                    : linkStyle
+                }
+              >
+                Home
+              </Nav.Link>
+            </OverlayTrigger>
+            <OverlayTrigger
+              placement="bottom"
+              overlay={renderTooltip("Go to Deposit page")}
+            >
+              <Nav.Link
+                as={NavLink}
+                to="/deposit/"
+                style={
+                  location.pathname === "/deposit/"
+                    ? { ...linkStyle, ...activeStyle }
+                    : linkStyle
+                }
+              >
+                Deposit
+              </Nav.Link>
+            </OverlayTrigger>
+            <OverlayTrigger
+              placement="bottom"
+              overlay={renderTooltip("Go to Withdraw page")}
+            >
+              <Nav.Link
+                as={NavLink}
+                to="/withdraw/"
+                style={
+                  location.pathname === "/withdraw/"
+                    ? { ...linkStyle, ...activeStyle }
+                    : linkStyle
+                }
+              >
+                Withdraw
+              </Nav.Link>
+            </OverlayTrigger>
+            <OverlayTrigger
+              placement="bottom"
+              overlay={renderTooltip("Go to All Data page")}
+            >
+              <Nav.Link
+                as={NavLink}
+                to="/all-data/"
+                style={
+                  location.pathname === "/all-data/"
+                    ? { ...linkStyle, ...activeStyle }
+                    : linkStyle
+                }
+              >
+                AllData
+              </Nav.Link>
+            </OverlayTrigger>
+          </Nav>
+          <Nav>
+            <OverlayTrigger
+              placement="bottom"
+              overlay={renderTooltip("Create a new account")}
+            >
+              <Nav.Link
+                as={NavLink}
+                to="/create-account/"
+                style={
+                  location.pathname === "/create-account/"
+                    ? { ...linkStyle, ...activeStyle }
+                    : linkStyle
+                }
+              >
+                Create Account
+              </Nav.Link>
+            </OverlayTrigger>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+    </>
   );
 };
 
